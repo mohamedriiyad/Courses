@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\blog\" />
+    <Folder Include="wwwroot\assets\img\elements\" />
+    <Folder Include="wwwroot\assets\img\gallery\" />
+  </ItemGroup>
+
 </Project>
