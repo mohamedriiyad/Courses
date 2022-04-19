@@ -8,13 +8,13 @@ namespace Courses.Models
         public University()
         {
             Departments = new HashSet<Department>();
-            Members = new HashSet<Member>();
+            ApplicationUsers = new HashSet<ApplicationUser>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
-        public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

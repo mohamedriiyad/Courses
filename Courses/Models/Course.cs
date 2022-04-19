@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Courses.Models
 {
@@ -8,19 +9,17 @@ namespace Courses.Models
         public Course()
         {
             Enrollement = new HashSet<Enrollement>();
-            InverseCoursePreNavigation = new HashSet<Course>();
+            Prerequisites = new HashSet<PrerequisitesCourse>();
         }
 
-        public int CourseId { get; set; }
-        public string CourseCode { get; set; }
-        public string CourseName { get; set; }
+        public int Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
         public int? Credit { get; set; }
-        public int CoursePre { get; set; }
         public int? DepartmentId { get; set; }
 
-        public virtual Course CoursePreNavigation { get; set; }
+        public virtual ICollection<PrerequisitesCourse> Prerequisites { get; set; }
         public virtual Department Department { get; set; }
         public virtual ICollection<Enrollement> Enrollement { get; set; }
-        public virtual ICollection<Course> InverseCoursePreNavigation { get; set; }
     }
 }

@@ -4,46 +4,22 @@ using Courses.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Courses.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419145440_ModifyDataTablesAndRemoveCoursesTable")]
+    partial class ModifyDataTablesAndRemoveCoursesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Courses.Models.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Credit")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Courses");
-                });
 
             modelBuilder.Entity("Courses.Models.Department", b =>
                 {
@@ -75,9 +51,6 @@ namespace Courses.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Grade")
                         .HasColumnType("int");
 
@@ -85,24 +58,7 @@ namespace Courses.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("CourseId");
-
                     b.ToTable("Enrollements");
-                });
-
-            modelBuilder.Entity("Courses.Models.PrerequisitesCourse", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PreCourseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CourseId", "PreCourseId");
-
-                    b.HasIndex("PreCourseId");
-
-                    b.ToTable("PrerequisitesCourse");
                 });
 
             modelBuilder.Entity("Courses.Models.University", b =>
@@ -338,15 +294,6 @@ namespace Courses.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("Courses.Models.Course", b =>
-                {
-                    b.HasOne("Courses.Models.Department", "Department")
-                        .WithMany("Courses")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("Courses.Models.Department", b =>
                 {
                     b.HasOne("Courses.Models.University", "University")
@@ -362,31 +309,7 @@ namespace Courses.Data.Migrations
                         .WithMany("Enrollement")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("Courses.Models.Course", "Course")
-                        .WithMany("Enrollement")
-                        .HasForeignKey("CourseId");
-
                     b.Navigation("ApplicationUser");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("Courses.Models.PrerequisitesCourse", b =>
-                {
-                    b.HasOne("Courses.Models.Course", "Course")
-                        .WithMany("Prerequisites")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Courses.Models.Course", "PreCourse")
-                        .WithMany()
-                        .HasForeignKey("PreCourseId")
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("PreCourse");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -447,18 +370,6 @@ namespace Courses.Data.Migrations
                         .HasForeignKey("UniversityId");
 
                     b.Navigation("University");
-                });
-
-            modelBuilder.Entity("Courses.Models.Course", b =>
-                {
-                    b.Navigation("Enrollement");
-
-                    b.Navigation("Prerequisites");
-                });
-
-            modelBuilder.Entity("Courses.Models.Department", b =>
-                {
-                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Courses.Models.University", b =>
