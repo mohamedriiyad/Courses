@@ -8,7 +8,7 @@ namespace Courses.Models
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }
         public int? CourseId { get; set; }
-        public int? Grade { get; set; }
+        public float Grade { get; set; }
 
         public virtual Course Course { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }

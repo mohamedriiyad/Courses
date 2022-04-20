@@ -14,6 +14,7 @@ namespace Courses.Models
 
         public int Id { get; set; }
         public string Code { get; set; }
+        public float Grade { get; set; }
         public string Name { get; set; }
         public int? Credit { get; set; }
         public int? DepartmentId { get; set; }
