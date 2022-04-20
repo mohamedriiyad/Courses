@@ -1,10 +1,7 @@
-﻿@page
-@model RegisterModel
-@{
-    ViewData["Title"] = "Register";
+﻿@model Courses.ViewModels.Users.UserSelfEditVM
+@{ 
     Layout = "";
 }
-
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -50,46 +47,48 @@
 
     <main class="login-body">
         <!-- Login Admin -->
-        <form  id="account" method="post">
+        <form id="account" method="post">
 
             <div class="login-form">
                 <!-- logo-login -->
-                <div class="logo-login">
+                @*<div class="logo-login">
                     <a href="index.html"><img src="~/assets/img/logo/loder.png" alt=""></a>
-                </div>
-                <h2>Register</h2>
+                </div>*@
+                <h2>Edit yout INFO</h2>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-input">
-                    <input asp-for="Input.Email" placeholder="Email">
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="@Model.Email" placeholder="Email">
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
                 </div>
                 <div class="form-input">
-                    <select class="form-select" style="display:block;" asp-for="Input.UniversityId">
+                    <select class="form-select" style="display:block;" asp-for="@Model.UniversityId">
                         <option disabled selected>University</option>
                         @foreach (var university in @Model.Universities)
                         {
                             <option value="@university.Id">@university.Name</option>
                         }
                     </select>
-                    <span asp-validation-for="Input.UniversityId" class="text-danger"></span>
+                    <span asp-validation-for="@Model.UniversityId" class="text-danger"></span>
                 </div>
                 <div class="form-input">
-                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                    <input asp-for="Input.PhoneNumber" placeholder="Phone">
+                    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                    <input asp-for="@Model.PhoneNumber" placeholder="Phone">
                 </div>
                 <div class="form-input">
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <input asp-for="Input.Password" placeholder="Password">
+                    <span asp-validation-for="@Model.OldPassword" class="text-danger"></span>
+                    <input asp-for="@Model.OldPassword" placeholder="Current Password">
                 </div>
                 <div class="form-input">
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    <input asp-for="Input.ConfirmPassword" placeholder="Confirm Password">
+                    <span asp-validation-for="@Model.NewPassword" class="text-danger"></span>
+                    <input asp-for="@Model.NewPassword" placeholder="New Password">
+                </div>
+                <div class="form-input">
+                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                    <input asp-for="@Model.ConfirmPassword" placeholder="Confirm Password">
                 </div>
                 <div class="form-input pt-30">
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Reset">
                 </div>
-                <span>Already have an acount? <a style="display:inline" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="registration">Login</a></span>
-
             </div>
         </form>
         <!-- /end login form -->

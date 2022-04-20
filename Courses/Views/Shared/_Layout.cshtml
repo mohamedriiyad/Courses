@@ -64,15 +64,23 @@
                                                 <li>
                                                     <a href="#">Blog</a>
                                                     <ul class="submenu">
-                                                        <li><a href="/Universities/index">University</a></li>
-                                                        <li><a href="blog_details.html">Blog Details</a></li>
+                                                        <li><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name})">Edit Info</a></li>
+                                                        <li><a href="Identity/Account/Logout">Logout</a></li>
+
                                                         <li><a href="elements.html">Element</a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="contact.html">Contact</a></li>
                                                 <!-- Button -->
-                                                <li class="button-header margin-left "><a href="#" class="btn">Join</a></li>
-                                                <li class="button-header"><a href="login.html" class="btn btn3">Log in</a></li>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <li class="button-header margin-left "><a href="Identity/Account/Logout" class="btn">Logout</a></li>
+                                                    <li class="button-header"><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name })" class="btn btn3">Edit Info</a></li> }
+                                                else
+                                                {
+                                                    <li class="button-header margin-left "><a href="Identity/Account/Login" class="btn">Log in</a></li>
+                                                    <li class="button-header"><a href="Identity/Account/Register" class="btn btn3">Register</a></li>
+                                                }
                                             </ul>
                                         </nav>
                                     </div>

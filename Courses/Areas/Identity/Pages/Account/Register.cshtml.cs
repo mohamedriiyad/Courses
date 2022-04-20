@@ -67,8 +67,13 @@ namespace Courses.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            
             [Required]
             public int UniversityId { get; set; }
+
+            [Required]
+            [Phone]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -86,7 +91,12 @@ namespace Courses.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, "University Field is required.");
             if (ModelState.IsValid && university != null)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, UniversityId = Input.UniversityId };
+                var user = new ApplicationUser { 
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    UniversityId = Input.UniversityId,
+                    PhoneNumber = Input.PhoneNumber 
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
