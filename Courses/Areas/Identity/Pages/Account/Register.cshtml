@@ -57,7 +57,7 @@
                 <div class="logo-login">
                     <a href="index.html"><img src="~/assets/img/logo/loder.png" alt=""></a>
                 </div>
-                <h2>Login Here</h2>
+                <h2>Register</h2>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-input">
                     <input asp-for="Input.Email" placeholder="Email">
@@ -82,10 +82,10 @@
                     <input asp-for="Input.ConfirmPassword" placeholder="Confirm Password">
                 </div>
                 <div class="form-input pt-30">
-                    <input type="submit" value="login">
+                    <input type="submit" value="Register">
                 </div>
-
-                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="registration">Login</a>
+                <span>Already have an acount? <a style="display:inline" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="registration">Login</a></span>
+                
             </div>
         </form>
         <!-- /end login form -->

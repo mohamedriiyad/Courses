@@ -82,6 +82,8 @@ namespace Courses.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             var university = await _db.Universities.FindAsync(Input.UniversityId);
+            if (university == null)
+                ModelState.AddModelError(string.Empty, "University Field is required.");
             if (ModelState.IsValid && university != null)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, UniversityId = Input.UniversityId };
