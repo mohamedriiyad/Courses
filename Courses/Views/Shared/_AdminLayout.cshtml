@@ -147,7 +147,7 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a asp-area="Identity" asp-page="/Account/Register">
+                                        <a asp-controller="Administration" asp-action="Create">
                                             <i class="metismenu-icon pe-7s-add-user"></i>
                                             Add User
                                         </a>
@@ -157,6 +157,28 @@
                                             <i class="metismenu-icon pe-7s-users">
                                             </i>
                                             Users List
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon fas pe-7s-network"></i>
+                                    Universities
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="@Url.Action("Create","Universities")">
+                                            <i class="metismenu-icon pe-7s-add-user"></i>
+                                            Add University
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Universities")">
+                                            <i class="metismenu-icon pe-7s-users">
+                                            </i>
+                                            Universities List
                                         </a>
                                     </li>
                                 </ul>
@@ -179,28 +201,6 @@
                                             <i class="metismenu-icon pe-7s-users">
                                             </i>
                                             Blogs List
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="metismenu-icon fas pe-7s-network"></i>
-                                    Suppliers
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="@Url.Action("Create","Suppliers")">
-                                            <i class="metismenu-icon pe-7s-add-user"></i>
-                                            Add Supplier
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("AdminIndex","Suppliers")">
-                                            <i class="metismenu-icon pe-7s-users">
-                                            </i>
-                                            Suppliers List
                                         </a>
                                     </li>
                                 </ul>
@@ -258,37 +258,37 @@
                                 </a>
                             </li>
                             @*<li>
-                                    <a href="#">
-                                        <i class="metismenu-icon fas fa-id-card" style=" opacity: 24%;"></i>
-                                        @Resource.GetResource("m_contacts")
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="@Url.Action("Create","PhoneNumbers")">
-                                                <i class="metismenu-icon pe-7s-add-user"></i>
-                                                @Resource.GetResource("add_phone")
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("AdminIndex","PhoneNumbers")">
-                                                <i class="metismenu-icon pe-7s-users">
-                                                </i>
-                                                @Resource.GetResource("phones_list")
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <hr />
-                                </li>
-                                <li>
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">
-                                            <i class="metismenu-icon pe-7s-angle-left-circle"></i>
-                                            @Resource.GetResource("logout")
-                                        </a>}
-                                </li>*@
+            <a href="#">
+                <i class="metismenu-icon fas fa-id-card" style=" opacity: 24%;"></i>
+                @Resource.GetResource("m_contacts")
+                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+            </a>
+            <ul>
+                <li>
+                    <a href="@Url.Action("Create","PhoneNumbers")">
+                        <i class="metismenu-icon pe-7s-add-user"></i>
+                        @Resource.GetResource("add_phone")
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("AdminIndex","PhoneNumbers")">
+                        <i class="metismenu-icon pe-7s-users">
+                        </i>
+                        @Resource.GetResource("phones_list")
+                    </a>
+                </li>
+            </ul>
+            <hr />
+        </li>
+        <li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="metismenu-icon pe-7s-angle-left-circle"></i>
+                    @Resource.GetResource("logout")
+                </a>}
+        </li>*@
                         </ul>
                     </div>
                 </div>
