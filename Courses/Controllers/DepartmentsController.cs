@@ -142,14 +142,19 @@ namespace Courses.Controllers
         }
 
         // POST: Departments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public async Task<JsonResult> DeleteConfirmed(int id)
         {
+            var result = false;
+
             var department = await _context.Departments.FindAsync(id);
-            _context.Departments.Remove(department);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if(department != null)
+            {
+                _context.Departments.Remove(department);
+                await _context.SaveChangesAsync();
+                result = true;
+            }
+            return Json(result);
         }
 
         private bool DepartmentExists(int id)
