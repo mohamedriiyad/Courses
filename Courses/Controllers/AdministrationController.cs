@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Courses.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdministrationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -35,6 +36,44 @@ namespace Courses.Controllers
             return View(users);
         }
 
+        public IActionResult Create()
+        {
+            var universities = _db.Universities.ToList();
+            var user = new UserInputVM { Universities = universities };
+
+            return View(user);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(UserInputVM input)
+        {
+            var university = await _db.Universities.FindAsync(input.UniversityId);
+            if (university == null)
+                ModelState.AddModelError(string.Empty, "University Field is required.");
+            if (ModelState.IsValid && university != null)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = input.Username,
+                    Email = input.Email,
+                    UniversityId = input.UniversityId,
+                    PhoneNumber = input.PhoneNumber
+                };
+                var result = await _userManager.CreateAsync(user, input.Password);
+                if (result.Succeeded)
+                    return RedirectToAction("Index");
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            input.Universities = _db.Universities.ToList();
+            // If we got this far, something failed, redisplay form
+            return View(input);
+        }
         // GET: AdministrationController/Details/5
         public async Task<ActionResult> Details(string id)
         {
