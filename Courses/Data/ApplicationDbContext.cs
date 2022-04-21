@@ -27,6 +27,7 @@ namespace Courses.Data
         public DbSet<Course> Courses{ get; set; }
         public DbSet<Department> Departments{ get; set; }
         public DbSet<Enrollement> Enrollements{ get; set; }
+        public DbSet<ApplicationUser> Users{ get; set; }
         public DbSet<Courses.Models.PrerequisitesCourse> PrerequisitesCourse { get; set; }
     }
 }
