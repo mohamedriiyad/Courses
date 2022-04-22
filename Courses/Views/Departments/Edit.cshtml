@@ -46,7 +46,9 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <select asp-for="UniversityId" class="form-control" asp-items="ViewBag.UniversityId"></select>
+                            <select asp-for="UniversityId" class="form-control" asp-items="ViewBag.UniversityId">
+                                <option value="0">-- Please Select It's University --</option>
+                            </select>
                             <span asp-validation-for="UniversityId" class="text-danger"></span>
                         </div>
                     </div>
