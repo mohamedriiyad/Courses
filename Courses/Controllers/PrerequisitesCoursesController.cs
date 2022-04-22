@@ -45,9 +45,17 @@ namespace Courses.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(prerequisitesCourse);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Courses");
+                if(prerequisitesCourse.CourseId != prerequisitesCourse.PreCourseId)
+                {
+                    _context.Add(prerequisitesCourse);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Courses");
+                }
+                ModelState.AddModelError(string.Empty, "The course shouldn't be itself preCourse.");
+
+                ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
+                ViewData["PreCourseId"] = new SelectList(_context.Courses, "Id", "Name");
+                return View(prerequisitesCourse);
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", prerequisitesCourse.CourseId);
             ViewData["PreCourseId"] = new SelectList(_context.Courses, "Id", "Name", prerequisitesCourse.PreCourseId);
