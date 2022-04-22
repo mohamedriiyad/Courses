@@ -125,7 +125,7 @@ namespace Courses.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "PrerequisitesCourses");
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", course.DepartmentId);
             return View(course);
