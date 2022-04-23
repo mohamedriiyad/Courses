@@ -57,7 +57,7 @@ namespace Courses.Controllers
                 await _context.SaveChangesAsync();
 
                 result = true;
-                return Json(result);
+                return Json(result);  
             }
 
             return Json(result);

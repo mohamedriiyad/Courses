@@ -11,22 +11,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CourseId" class="control-label"></label>
-                <select required id="CourseId" asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
-                    <option disabled selected value="0">-- Please Select Course --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                @*<label asp-for="PreCoursesId" class="control-label"></label>*@
-                <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" onclick="confirm()" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CourseId" class="control-label"></label>
+            <select required id="CourseId" asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
+                <option disabled selected value="0">-- Please Select Course --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            @*<label asp-for="PreCoursesId" class="control-label"></label>*@
+            <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId"></select>
+        </div>
+        <div class="form-group">
+            <button onclick="confirm()" value="Create" class="btn btn-primary">Create</button>
+        </div>
     </div>
 </div>
 
@@ -34,18 +32,29 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<a href="#" id="mod" hidden style="color:red;" data-placement="left" data-toggle="modal" data-target=".bd-example-modal-sm" title="Delete"><i class="pe-7s-trash"></i></a>
+<!--Modal-->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 77px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The Course was Added SUCCESSFULLY!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="ok()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script>
-        //var confirm = function () {
-        //    var list = document.getElementById("dropDownList-example").selectedOptions;
-        //    var values = Array.from(list).map(({ value }) => value);
-        //    console.log(values);
-        //}
-        //$(document).ready(function () {
-        //    $('#dropDownList-example').multiSelect();
-        //    console.log("here")
-        //});
-
 
         var confirm = function () {
             var list = document.getElementById("dropDownList-example").selectedOptions;
@@ -67,20 +76,26 @@
                         courseId: CourseId,
                         tests: _tests
                     },
-                    success: function () {
-                        alert("request.");
-                            console.log(result)
-                            window.location.href = "/PrerequisitesCourses/Index";
+                    success: function (result) {
+                        if (result) {
+                            document.getElementById("mod").click();
+                        } else {
+                            alert("The course shouldn't be itself PRECOURSE.");
+                        }
+
 
                     },
-                    error: function () {
-
+                    error: function (response) {
+                        console.log(response);
                         alert("Something went wrong while processing your request.");
                     }
                 });
             } else {
                 alert("You should select one Course.");
             }
+        }
+        var ok = function () {
+            window.location.href = "/Courses/Create";
         }
     </script>
 
