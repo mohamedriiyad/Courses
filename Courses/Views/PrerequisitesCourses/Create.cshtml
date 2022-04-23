@@ -1,4 +1,4 @@
-﻿@model Courses.Models.PrerequisitesCourse
+﻿@model Courses.ViewModels.PrerequisitesCourses.PreCoursesVM
 
 @{
     ViewData["Title"] = "Create";
@@ -11,22 +11,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CourseId" class="control-label"></label>
-                <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
-                    <option value="0">-- Please Select Course --</option>
+                <select required id="CourseId" asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
+                    <option disabled selected value="0">-- Please Select Course --</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="PreCourseId" class="control-label"></label>
-                <select asp-for="PreCourseId" class="form-control" asp-items="ViewBag.PreCourseId">
-                    <option value="0">-- Please Select It's Prerequest Course --</option>
-                </select>
+                @*<label asp-for="PreCoursesId" class="control-label"></label>*@
+                <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" onclick="confirm()" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -37,5 +35,53 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        //var confirm = function () {
+        //    var list = document.getElementById("dropDownList-example").selectedOptions;
+        //    var values = Array.from(list).map(({ value }) => value);
+        //    console.log(values);
+        //}
+        //$(document).ready(function () {
+        //    $('#dropDownList-example').multiSelect();
+        //    console.log("here")
+        //});
+
+
+        var confirm = function () {
+            var list = document.getElementById("dropDownList-example").selectedOptions;
+            var values = Array.from(list).map(({ value }) => parseInt(value));
+
+            var Courses = document.getElementById("CourseId").selectedOptions;
+            var CourseId = Array.from(Courses).map(({ value }) => value);
+            if (CourseId[0] != 0) {
+                console.log(CourseId[0])
+                var _tests = [];
+                for (var i = 0; i < values.length; i++) {
+                    _tests[i] = { id: values[i], name: 'yellow' }
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/PrerequisitesCourses/Create",
+                    data: {
+                        courseId: CourseId,
+                        tests: _tests
+                    },
+                    success: function () {
+                        alert("request.");
+                            console.log(result)
+                            window.location.href = "/PrerequisitesCourses/Index";
+
+                    },
+                    error: function () {
+
+                        alert("Something went wrong while processing your request.");
+                    }
+                });
+            } else {
+                alert("You should select one Course.");
+            }
+        }
+    </script>
+
 }

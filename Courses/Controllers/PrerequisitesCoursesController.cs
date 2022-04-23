@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Courses.Data;
 using Courses.Models;
-using Microsoft.AspNetCore.Authorization;
+using Courses.ViewModels.PrerequisitesCourses;
 
 namespace Courses.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class PrerequisitesCoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -42,26 +41,26 @@ namespace Courses.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseId,PreCourseId")] PrerequisitesCourse prerequisitesCourse)
+        public async Task<JsonResult> Create(PreCoursesVM prerequisitesCourse)
         {
-            if (ModelState.IsValid)
+            var result = false;
+            if (!ModelState.IsValid)
+                return Json(result);
+            
+            var ids = prerequisitesCourse.tests.Select(t => t.Id).ToList();
+            if (!ids.Contains(prerequisitesCourse.CourseId))
             {
-                if(prerequisitesCourse.CourseId != prerequisitesCourse.PreCourseId)
+                foreach (var id in ids)
                 {
-                    _context.Add(prerequisitesCourse);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Courses");
+                    await _context.PrerequisitesCourse.AddAsync(new PrerequisitesCourse { PreCourseId = id, CourseId = prerequisitesCourse.CourseId });
                 }
-                ModelState.AddModelError(string.Empty, "The course shouldn't be itself preCourse.");
+                await _context.SaveChangesAsync();
 
-                ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
-                ViewData["PreCourseId"] = new SelectList(_context.Courses, "Id", "Name");
-                return View(prerequisitesCourse);
+                result = true;
+                return Json(result);
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", prerequisitesCourse.CourseId);
-            ViewData["PreCourseId"] = new SelectList(_context.Courses, "Id", "Name", prerequisitesCourse.PreCourseId);
-            return View(prerequisitesCourse);
+
+            return Json(result);
         }
         private bool PrerequisitesCourseExists(int id)
         {
