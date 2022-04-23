@@ -31,6 +31,16 @@ namespace Courses.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Courses
+        public async Task<IActionResult> AdminIndex()
+        {
+            var applicationDbContext = _context.Courses
+                .Include(p => p.Department)
+                .Include(p => p.Prerequisites)
+                .ThenInclude(pc => pc.Course);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
