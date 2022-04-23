@@ -44,11 +44,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>The Course was Added SUCCESSFULLY!</p>
+                <p id="message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="ok()">OK</button>
+                <button id="modalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="modalBtn" type="button" class="btn btn-primary" onclick="ok()">OK</button>
             </div>
         </div>
     </div>
@@ -76,26 +76,41 @@
                         courseId: CourseId,
                         tests: _tests
                     },
-                    success: function (result) {
-                        if (result) {
+                    success: function (data) {
+                        if (data.result) {
+                            console.log(data.result)
+                            console.log(data.message)
+                            document.getElementById("exampleModalLongTitle").innerHTML = "Success!";
+                            document.getElementById("message").innerHTML = data.message;
                             document.getElementById("mod").click();
                         } else {
-                            alert("The course shouldn't be itself PRECOURSE.");
+                            document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
+                            document.getElementById("message").innerHTML = data.message;
+                            document.getElementById("mod").click();
+                            document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
                         }
-
-
                     },
                     error: function (response) {
-                        console.log(response);
-                        alert("Something went wrong while processing your request.");
+                        document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
+                        document.getElementById("message").innerHTML = "This Course with these PreCourses is Already exists!.";
+                        document.getElementById("mod").click();
+                        document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
                     }
                 });
             } else {
-                alert("You should select one Course.");
+                document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
+                document.getElementById("message").innerHTML = "You should select one Course.";
+                document.getElementById("mod").click();
+                document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
             }
         }
+
         var ok = function () {
             window.location.href = "/Courses/Create";
+        }
+
+        var stay = function () {
+            document.getElementById("modalClose").click();
         }
     </script>
 

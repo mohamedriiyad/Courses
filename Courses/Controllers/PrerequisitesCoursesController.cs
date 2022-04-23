@@ -44,6 +44,7 @@ namespace Courses.Controllers
         public async Task<JsonResult> Create(PreCoursesVM prerequisitesCourse)
         {
             var result = false;
+            string message;
             if (!ModelState.IsValid)
                 return Json(result);
             
@@ -57,10 +58,12 @@ namespace Courses.Controllers
                 await _context.SaveChangesAsync();
 
                 result = true;
-                return Json(result);  
+                message = "The Course was Added SUCCESSFULLY!";
+                return Json(new { result, message });  
             }
 
-            return Json(result);
+            message = "The course shouldn't be itself PRECOURSE.";
+            return Json(new { result, message });
         }
         private bool PrerequisitesCourseExists(int id)
         {
