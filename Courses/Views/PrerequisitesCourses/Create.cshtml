@@ -4,34 +4,85 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-network icon-gradient bg-happy-itmeo">
+                </i>
+            </div>
+            <div>
+                Create Prerequst Course
+                <div class="page-title-subheading">
 
-<h1>Create</h1>
+                </div>
+            </div>
+        </div>
+        <div class="page-title-actions">
 
-<h4>PrerequisitesCourse</h4>
-<hr />
+            <div class="d-inline-block">
+                <p>
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row clearfix">
+    <div class="col-lg-6" style="margin: 6px auto">
+        <div class="card">
+            <div class="body">
+                <form action="/" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="margin-top: 50px" class="form-group">
+                        <div class="col-md-12">
+                            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
+                                <option disabled selected value="0">-- Please Select Course --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 50px" class="form-group">
+                        <div class="col-md-12">
+                            <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId">
+                                <option disabled selected value="0">-- Please Select PreCourses --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 50px" class="form-group">
+                        <div class="col-md-12">
+                            <button onclick="confirm()" value="Create" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="card-body">
+    <h1>erabsdbv</h1>
+
+</div>
 <div class="row">
     <div class="col-md-4">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="CourseId" class="control-label"></label>
+            <label asp-for="CourseId" class="control-label">Course Name</label>
             <select required id="CourseId" asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
                 <option disabled selected value="0">-- Please Select Course --</option>
             </select>
         </div>
         <div class="form-group">
-            @*<label asp-for="PreCoursesId" class="control-label"></label>*@
+            <label class="control-label">It's Prerequest Course</label>
             <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId">
                 <option disabled selected value="0">-- Please Select PreCourses --</option>
             </select>
         </div>
         <div class="form-group">
             <button onclick="confirm()" value="Create" class="btn btn-primary">Create</button>
+            @*<a asp-action="Index" class="btn btn-primary">Back to List</a>*@
         </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 <a href="#" id="mod" hidden style="color:red;" data-placement="left" data-toggle="modal" data-target=".bd-example-modal-sm" title="Delete"><i class="pe-7s-trash"></i></a>
