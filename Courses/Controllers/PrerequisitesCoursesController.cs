@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Courses.Data;
 using Courses.Models;
 using Courses.ViewModels.PrerequisitesCourses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Courses.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PrerequisitesCoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
