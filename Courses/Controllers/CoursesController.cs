@@ -24,10 +24,10 @@ namespace Courses.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PrerequisitesCourse
-                .Include(p => p.PreCourse)
-                .Include(p => p.Course)
-                .Include(p => p.Course.Department);
+            var applicationDbContext = _context.Courses
+                .Include(p => p.Department)
+                .Include(p => p.Prerequisites)
+                .ThenInclude(pc =>pc.Course);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -75,6 +75,7 @@ namespace Courses.Controllers
             }
             var courseInDb = await _context.Courses.FirstOrDefaultAsync(c => c.Code == course.Code);
             if (courseInDb != null) {
+                ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", course.DepartmentId);
                 ModelState.AddModelError("", "This Course code Already exists.");
                 return View(course);
             }
@@ -156,14 +157,18 @@ namespace Courses.Controllers
         }
 
         // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public async Task<JsonResult> DeleteConfirmed(int id)
         {
+            var result = false;
             var course = await _context.Courses.FindAsync(id);
+            if (course == null)
+                return Json(result);
+
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            result = true;
+            return Json(result);
         }
 
         private bool CourseExists(int id)
