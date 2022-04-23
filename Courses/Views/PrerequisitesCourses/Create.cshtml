@@ -20,7 +20,9 @@
         </div>
         <div class="form-group">
             @*<label asp-for="PreCoursesId" class="control-label"></label>*@
-            <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId"></select>
+            <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId">
+                <option disabled selected value="0">-- Please Select PreCourses --</option>
+            </select>
         </div>
         <div class="form-group">
             <button onclick="confirm()" value="Create" class="btn btn-primary">Create</button>
@@ -62,8 +64,7 @@
 
             var Courses = document.getElementById("CourseId").selectedOptions;
             var CourseId = Array.from(Courses).map(({ value }) => value);
-            if (CourseId[0] != 0) {
-                console.log(CourseId[0])
+            if (CourseId[0] != 0 && values[0] != 0) {
                 var _tests = [];
                 for (var i = 0; i < values.length; i++) {
                     _tests[i] = { id: values[i], name: 'yellow' }
@@ -78,30 +79,17 @@
                     },
                     success: function (data) {
                         if (data.result) {
-                            console.log(data.result)
-                            console.log(data.message)
-                            document.getElementById("exampleModalLongTitle").innerHTML = "Success!";
-                            document.getElementById("message").innerHTML = data.message;
-                            document.getElementById("mod").click();
+                            success(data.message);
                         } else {
-                            document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
-                            document.getElementById("message").innerHTML = data.message;
-                            document.getElementById("mod").click();
-                            document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
+                            failed(data.message);
                         }
                     },
                     error: function (response) {
-                        document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
-                        document.getElementById("message").innerHTML = "This Course with these PreCourses is Already exists!.";
-                        document.getElementById("mod").click();
-                        document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
+                        failed("This Course with these PreCourses is Already exists!.");
                     }
                 });
             } else {
-                document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
-                document.getElementById("message").innerHTML = "You should select one Course.";
-                document.getElementById("mod").click();
-                document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
+                failed("You should select one Course.");
             }
         }
 
@@ -111,6 +99,20 @@
 
         var stay = function () {
             document.getElementById("modalClose").click();
+        }
+
+        var success = function (message) {
+            document.getElementById("exampleModalLongTitle").innerHTML = "Success!";
+            document.getElementById("message").innerHTML = message;
+            document.getElementById("mod").click();
+            document.getElementById("modalBtn").setAttribute('onclick', 'ok()')
+        }
+
+        var failed = function (message) {
+            document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
+            document.getElementById("message").innerHTML = message;
+            document.getElementById("mod").click();
+            document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
         }
     </script>
 

@@ -68,14 +68,19 @@ namespace Courses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Code,Grade,Name,Credit,DepartmentId")] Course course)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Create", "PrerequisitesCourses");
+                ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", course.DepartmentId);
+                return View(course);
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", course.DepartmentId);
-            return View(course);
+            var courseInDb = await _context.Courses.FirstOrDefaultAsync(c => c.Code == course.Code);
+            if (courseInDb != null) {
+                ModelState.AddModelError("", "This Course code Already exists.");
+                return View(course);
+            }
+            _context.Add(course);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Create", "PrerequisitesCourses");
         }
 
         // GET: Courses/Edit/5

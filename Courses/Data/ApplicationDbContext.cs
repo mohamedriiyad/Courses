@@ -22,6 +22,10 @@ namespace Courses.Data
                 pc.HasOne(e => e.Course).WithMany(c => c.Prerequisites);
                 pc.HasOne(e => e.PreCourse).WithMany().OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            builder.Entity<Course>()
+                .HasIndex(c => c.Code)
+                .IsUnique();
         }
         public DbSet<University> Universities { get; set; }
         public DbSet<Course> Courses{ get; set; }
