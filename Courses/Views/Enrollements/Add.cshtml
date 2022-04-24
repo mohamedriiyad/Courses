@@ -1,5 +1,4 @@
 ﻿@model Courses.Models.Enrollement
-
 <!--? slider Area Start-->
 <section class="slider-area slider-area2">
     <div class="slider-active">
@@ -32,7 +31,7 @@
                 <div class="input-group-icon border mt-10">
                     <div class="icon"><i class="fa fa-book" aria-hidden="true"></i></div>
                     <div class="form-select" id="default-select">
-                        <select  asp-for="CourseId" asp-items="ViewBag.Courses">
+                        <select asp-for="CourseId" asp-items="ViewBag.Courses">
                             <option selected disabled value="-1">Course</option>
                         </select>
                     </div>
@@ -58,22 +57,49 @@
                 </div>
             </div>
 
-            <div class="row">
-                @foreach(var course in ViewBag.Explore){
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="~/assets/img/icon/icon1.svg" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>@course.Name</h3>
-                                <p>Code: @course.Code</p>
-                                <p>Grade: @course.Grade</p>
+            @if (ViewBag.Explore.Count > 2)
+            {
+                <div style="text-align: center;" class="row">
+                    @foreach (var course in ViewBag.Explore)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-8">
+                            <div class="single-services mb-30">
+                                <div class="features-icon">
+                                    <img src="~/assets/img/icon/icon1.svg" alt="">
+                                </div>
+                                <div class="features-caption">
+                                    <h3 style="margin-top: 13px;">@course.Name</h3>
+                                    <p style="margin-bottom: 6px;">Code: @course.Code</p>
+                                    <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+
+
+
+                </div>
+            }
+            else
+            {
+                <div style="text-align: right;" class="row">
+                    @foreach (var course in ViewBag.Explore)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-8">
+                            <div class="single-services mb-30">
+                                <div class="features-icon">
+                                    <img src="~/assets/img/icon/icon1.svg" alt="">
+                                </div>
+                                <div class="features-caption">
+                                    <h3 style="margin-top: 13px;">@course.Name</h3>
+                                    <p style="margin-bottom: 6px;">Code: @course.Code</p>
+                                    <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </section>
