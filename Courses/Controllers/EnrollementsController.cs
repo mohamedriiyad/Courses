@@ -49,8 +49,8 @@ namespace Courses.Controllers
         // GET: Enrollements/Create
         public IActionResult Create()
         {
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code");
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace Courses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code", enrollement.CourseId);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -85,8 +85,8 @@ namespace Courses.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code", enrollement.CourseId);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -122,8 +122,8 @@ namespace Courses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code", enrollement.CourseId);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -160,7 +160,7 @@ namespace Courses.Controllers
 
         public ActionResult EnrollementPage()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
             var courses = _context.Courses
                 .Include(p => p.Department)
                 .Include(p => p.Prerequisites)
