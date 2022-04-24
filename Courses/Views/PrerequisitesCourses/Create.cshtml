@@ -59,10 +59,7 @@
         </div>
     </div>
 </div>*@
-<div class="card-body">
-    <h1>erabsdbv</h1>
 
-</div>
 <div class="row">
     <div class="col-md-4">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -123,7 +120,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/PrerequisitesCourses/Create",
+                    url: "/Enrollements/Create",
                     data: {
                         courseId: CourseId,
                         tests: _tests
@@ -145,7 +142,7 @@
         }
 
         var ok = function () {
-            window.location.href = "/Courses/Create";
+            window.location.href = "/Enrollements/Create";
         }
 
         var stay = function () {
