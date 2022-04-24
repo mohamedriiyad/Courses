@@ -50,7 +50,7 @@ namespace Courses.Controllers
         public IActionResult Create()
         {
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace Courses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -86,7 +86,7 @@ namespace Courses.Controllers
                 return NotFound();
             }
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -123,7 +123,7 @@ namespace Courses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName", enrollement.ApplicationUserId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade", enrollement.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", enrollement.CourseId);
             return View(enrollement);
         }
 
@@ -160,7 +160,7 @@ namespace Courses.Controllers
 
         public ActionResult EnrollementPage()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
             var courses = _context.Courses
                 .Include(p => p.Department)
                 .Include(p => p.Prerequisites)
