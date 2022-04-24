@@ -158,6 +158,21 @@ namespace Courses.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public ActionResult EnrollementPage()
+        {
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Code");
+            var courses = _context.Courses
+                .Include(p => p.Department)
+                .Include(p => p.Prerequisites)
+                .ThenInclude(pc => pc.Course).ToList();
+            
+            return View(courses);
+        }
+
+        public ActionResult ConfirmedEnrollementPage()
+        {
+            return View();
+        }
         private bool EnrollementExists(int id)
         {
             return _context.Enrollements.Any(e => e.Id == id);
