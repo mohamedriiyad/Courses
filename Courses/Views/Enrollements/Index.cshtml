@@ -57,7 +57,7 @@
                 </i>
             </div>
             <div>
-                Prerequisites Course List
+                Enrollements List
                 <div class="page-title-subheading">
 
                 </div>
@@ -94,7 +94,8 @@
                                     @Html.DisplayNameFor(model => model.Course)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ApplicationUser)
+                                    @*@Html.DisplayNameFor(model => model.ApplicationUser)*@
+                                    Student 
                                 </th>
                             </tr>
                         </thead>
@@ -114,7 +115,7 @@
                                         @Html.DisplayFor(modelItem => item.Course.Code)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                                        @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
                                     </td>
                                 </tr>
                             }

@@ -219,7 +219,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Index","Courses")">
+                                        <a href="@Url.Action("AdminIndex","Courses")">
                                             <i class="metismenu-icon pe-7s-users">
                                             </i>
                                             Courses List
@@ -233,24 +233,24 @@
                                     Prerequisites
                                 </a>
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     <i class="metismenu-icon fas pe-7s-tools" style=" opacity: 100%;"></i>
                                     Support
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
-                                <a href="#">
-                                    <i class="metismenu-icon fas pe-7s-call" style=" opacity: 100%;"></i>
-                                    Contacts
+                                <a asp-action="Index" asp-controller="Enrollements">
+                                    <i class="metismenu-icon fas pe-7s-magic-wand " style=" opacity: 100%;"></i>
+                                    Enrolled Courses
                                 </a>
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     <i class="metismenu-icon fas pe-7s-magic-wand " style=" opacity: 100%;"></i>
                                     Achievements
                                 </a>
-                            </li>
+                            </li>*@
                             <hr />
                             <li>
                                 <a asp-area="Identity" asp-page="/Account/Logout">
