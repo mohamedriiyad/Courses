@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Courses | Education</title>
+    <title>Advisor | Education</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -49,7 +49,7 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a asp-action="Index" asp-controller="Home"><img src="assets/img/logo/logo.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10">
@@ -58,19 +58,19 @@
                                     <div class="main-menu d-none d-lg-block">
                                         <nav>
                                             <ul id="navigation">
-                                                <li class="active"><a href="index.html">Home</a></li>
-                                                <li><a href="courses.html">Courses</a></li>
-                                                <li><a href="about.html">About</a></li>
+                                                <li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                                                <li><a asp-action="Index" asp-controller="Courses">Courses</a></li>
+                                                @*<li><a href="about.html">About</a></li>*@
                                                 <li>
                                                     <a href="#">Blog</a>
                                                     <ul class="submenu">
                                                         <li><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name})">Edit Info</a></li>
                                                         <li><a href="Identity/Account/Logout">Logout</a></li>
 
-                                                        <li><a href="elements.html">Element</a></li>
+                                                        @*<li><a href="elements.html">Element</a></li>*@
                                                     </ul>
                                                 </li>
-                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
                                                 <!-- Button -->
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
@@ -112,7 +112,7 @@
                                 <div class="single-footer-caption mb-30">
                                     <!-- logo -->
                                     <div class="footer-logo mb-25">
-                                        <a href="index.html"><img src="~/assets/img/logo/logo2_footer.png" alt=""></a>
+                                        <a asp-action="Index" asp-controller="Home"><img src="~/assets/img/logo/logo2_footer.png" alt=""></a>
                                     </div>
                                     <div class="footer-tittle">
                                         <div class="footer-pera">
@@ -131,13 +131,13 @@
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
-                                    <h4>Our solutions</h4>
+                                    <h4>Our Courses</h4>
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
-                                        <li><a href="#">Telecommunication</a></li>
+                                        @*<li><a href="#">Telecommunication</a></li>
                                         <li><a href="#">Restaurant</a></li>
                                         <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>
+                                        <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -148,10 +148,10 @@
                                     <h4>Support</h4>
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
-                                        <li><a href="#">Telecommunication</a></li>
+                                        @*<li><a href="#">Telecommunication</a></li>
                                         <li><a href="#">Restaurant</a></li>
                                         <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>
+                                        <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -159,13 +159,13 @@
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
-                                    <h4>Company</h4>
+                                    <h4>University</h4>
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
-                                        <li><a href="#">Telecommunication</a></li>
+                                        @*<li><a href="#">Telecommunication</a></li>
                                         <li><a href="#">Restaurant</a></li>
                                         <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>
+                                        <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -183,7 +183,7 @@
                                     <p>
                                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                         Copyright &copy;
-                                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This Site is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="#" target="_blank">Advisor</a>
                                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     </p>
                                 </div>
