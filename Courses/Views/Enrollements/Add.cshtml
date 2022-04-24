@@ -1,0 +1,84 @@
+﻿@model Courses.Models.Enrollement
+
+<!--? slider Area Start-->
+<section class="slider-area slider-area2">
+    <div class="slider-active">
+        <!-- Single Slider -->
+        <div class="single-slider slider-height2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-11 col-md-12">
+                        <div class="hero__caption hero__caption2">
+                            <h1 data-animation="bounceIn" data-delay="0.2s">Check out your Upcoming Courses</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about-area3 fix">
+    <div class="support-wrapper align-items-center" style="margin-top: 35px; margin-bottom: 45px;">
+        <div class="right-content3" style="width: 38%;">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2>Your Advisor</h2>
+                    </div>
+                </div>
+            </div>
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="input-group-icon border mt-10">
+                    <div class="icon"><i class="fa fa-book" aria-hidden="true"></i></div>
+                    <div class="form-select" id="default-select">
+                        <select  asp-for="CourseId" asp-items="ViewBag.Courses">
+                            <option selected disabled value="-1">Course</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group-icon border mt-10">
+                    <div class="icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
+                    <input asp-for="Grade" type="number" placeholder="Grade"
+                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required
+                           class="single-input">
+                </div>
+                <div class="mt-10 center" style="text-align: center; margin-top: 24px;">
+                    <button type="submit" href="#" class="genric-btn primary circle">Get Suggestion</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="left-content3" style="width: 56%;">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2>@ViewBag.Title</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach(var course in ViewBag.Explore){
+                    <div class="col-lg-4 col-md-6 col-sm-8">
+                        <div class="single-services mb-30">
+                            <div class="features-icon">
+                                <img src="~/assets/img/icon/icon1.svg" alt="">
+                            </div>
+                            <div class="features-caption">
+                                <h3>@course.Name</h3>
+                                <p>Code: @course.Code</p>
+                                <p>Grade: @course.Grade</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
