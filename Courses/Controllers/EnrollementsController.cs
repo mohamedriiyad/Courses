@@ -53,7 +53,49 @@ namespace Courses.Controllers
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
             return View();
         }
+        public IActionResult Add()
+        {
+            ViewData["Explore"] = _context.Courses.Take(6).ToList();
+            ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            ViewData["Title"] = "Explore top subjects";
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(Enrollement input)
+        {
+            var course = await _context.Courses.FindAsync(input.CourseId);
+            if(input.Grade < (course.Grade/2))
+            {
+                ViewData["Explore"] = _context.Courses.Take(6).ToList();
+                ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
+                ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+                ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+                ViewData["Title"] = "Explore top subjects";
+
+                ModelState.AddModelError("", "SORRY, You did not pass the course! ");
+                return View(input);
+            }
+            await _context.Enrollements.AddAsync(input);
+            await _context.SaveChangesAsync();
+
+            ViewData["Explore"] = _context.PrerequisitesCourse.Where(p => p.PreCourseId == input.CourseId).Select(p => new Course {
+                Name = p.Course.Name,  
+                Code = p.Course.Code,
+                Credit = p.Course.Credit,   
+                Grade = p.Course.Grade,
+                Id = p.Course.Id,
+            }).ToList();
+            ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            ViewData["Title"] = "Your Suggestions";
+
+            return View(input);
+        }
         // POST: Enrollements/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
