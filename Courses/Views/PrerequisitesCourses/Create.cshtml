@@ -29,36 +29,6 @@
     </div>
 </div>
 
-@*<div class="row clearfix">
-    <div class="col-lg-6" style="margin: 6px auto">
-        <div class="card">
-            <div class="body">
-                <form action="/" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div style="margin-top: 50px" class="form-group">
-                        <div class="col-md-12">
-                            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
-                                <option disabled selected value="0">-- Please Select Course --</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-top: 50px" class="form-group">
-                        <div class="col-md-12">
-                            <select required id="dropDownList-example" class="form-control" multiple asp-items="ViewBag.PreCourseId">
-                                <option disabled selected value="0">-- Please Select PreCourses --</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-top: 50px" class="form-group">
-                        <div class="col-md-12">
-                            <button onclick="confirm()" value="Create" class="btn btn-primary">Create</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>*@
 
 <div class="row">
     <div class="col-md-4">
@@ -111,6 +81,7 @@
             var values = Array.from(list).map(({ value }) => parseInt(value));
 
             var Courses = document.getElementById("CourseId").selectedOptions;
+
             var CourseId = Array.from(Courses).map(({ value }) => value);
             if (CourseId[0] != 0 && values[0] != 0) {
                 var _tests = [];
@@ -120,7 +91,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Enrollements/Create",
+                    url: "/PrerequisitesCourses/Create",
                     data: {
                         courseId: CourseId,
                         tests: _tests
@@ -142,7 +113,7 @@
         }
 
         var ok = function () {
-            window.location.href = "/Enrollements/Create";
+            window.location.href = "/Courses/Create";
         }
 
         var stay = function () {

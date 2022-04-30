@@ -62,7 +62,7 @@
                                                 <li><a asp-action="Add" asp-controller="Enrollements">Suggestions</a></li>
                                                 @*<li><a href="about.html">About</a></li>*@
                                                 <li>
-                                                    <a href="#">Blog</a>
+                                                    <a href="#">User</a>
                                                     <ul class="submenu">
                                                         <li><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name})">Edit Info</a></li>
                                                         <li><a href="Identity/Account/Logout">Logout</a></li>
@@ -70,16 +70,21 @@
                                                         @*<li><a href="elements.html">Element</a></li>*@
                                                     </ul>
                                                 </li>
-                                                <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
+                                                @if (User.IsInRole("admin"))
+                                                {
+                                                    <li><a asp-action="Index" asp-controller="Administration">Admin</a></li>
+                                                }
+
                                                 <!-- Button -->
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
-                                                    <li class="button-header margin-left "><a href="Identity/Account/Logout" class="btn">Logout</a></li>
-                                                    <li class="button-header"><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name })" class="btn btn3">Edit Info</a></li> }
+                                                    <li class="button-header margin-left "><a asp-area="Identity" asp-page="/Account/Logout" class="btn">Logout</a></li>
+                                                    <li class="button-header"><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name })" class="btn btn3">Edit Info</a></li>
+ }
                                                 else
                                                 {
-                                                    <li class="button-header margin-left "><a href="Identity/Account/Login" class="btn">Log in</a></li>
-                                                    <li class="button-header"><a href="Identity/Account/Register" class="btn btn3">Register</a></li>
+                                                    <li class="button-header margin-left "><a asp-area="Identity" asp-page="/Account/Login" class="btn">Log in</a></li>
+                                                    <li class="button-header"><a asp-area="Identity" asp-page="/Account/Register" class="btn btn3">Register</a></li>
                                                 }
                                             </ul>
                                         </nav>
@@ -183,7 +188,7 @@
                                     <p>
                                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                         Copyright &copy;
-                                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This Site is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="#" target="_blank">Advisor</a>
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved
                                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     </p>
                                 </div>

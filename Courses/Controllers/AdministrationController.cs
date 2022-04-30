@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Courses.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class AdministrationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,6 +21,7 @@ namespace Courses.Controllers
         }
 
         // GET: AdministrationController
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             var users = _userManager.Users.Select(u => new UserListVM
@@ -36,6 +36,7 @@ namespace Courses.Controllers
             return View(users);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             var universities = _db.Universities.ToList();
@@ -47,6 +48,7 @@ namespace Courses.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(UserInputVM input)
         {
             var university = await _db.Universities.FindAsync(input.UniversityId);
@@ -75,6 +77,7 @@ namespace Courses.Controllers
             return View(input);
         }
         // GET: AdministrationController/Details/5
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Details(string id)
         {
             var userInDb = await FindByIdAsync(id);
@@ -94,6 +97,7 @@ namespace Courses.Controllers
 
 
         // GET: AdministrationController/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Delete(string id)
         {
             var userInDb = await FindByIdAsync(id);
@@ -112,6 +116,7 @@ namespace Courses.Controllers
 
         // POST: AdministrationController/Delete/5
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<JsonResult> DeleteConfirmed(string id)
         {
             var result = false;
@@ -125,6 +130,7 @@ namespace Courses.Controllers
             return Json(result);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Edit(string id)
         {
             var userInDb = await FindByIdAsync(id);
@@ -143,6 +149,7 @@ namespace Courses.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(UserSelfEditVM input)
         {
             if (!ModelState.IsValid)
@@ -179,6 +186,7 @@ namespace Courses.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public async Task<ActionResult> UserEdit(string name)
         {
             var userInDb = await _userManager.FindByNameAsync(name);
@@ -197,6 +205,7 @@ namespace Courses.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UserEdit(UserSelfEditVM input)
         {
             if (!ModelState.IsValid)
