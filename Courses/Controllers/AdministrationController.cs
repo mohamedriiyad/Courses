@@ -198,6 +198,7 @@ namespace Courses.Controllers
                 Id = userInDb.Id,
                 Email = userInDb.Email,
                 PhoneNumber = userInDb.PhoneNumber,
+                NewGPA = userInDb.GPA,
                 Universities = universities
             };
 

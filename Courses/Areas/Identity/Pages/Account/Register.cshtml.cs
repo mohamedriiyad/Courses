@@ -78,6 +78,9 @@ namespace Courses.Areas.Identity.Pages.Account
             public int UniversityId { get; set; }
 
             [Required]
+            public double GPA { get; set; }
+
+            [Required]
             [Phone]
             public string PhoneNumber { get; set; }
         }
@@ -101,6 +104,7 @@ namespace Courses.Areas.Identity.Pages.Account
                     UserName = Input.Username,
                     Email = Input.Email,
                     UniversityId = Input.UniversityId,
+                    GPA = Input.GPA,
                     PhoneNumber = Input.PhoneNumber 
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);

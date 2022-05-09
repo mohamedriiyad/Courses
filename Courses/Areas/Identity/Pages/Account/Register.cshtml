@@ -26,6 +26,10 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-input">
+                <input asp-for="Input.GPA" placeholder="Your GPA">
+                <span asp-validation-for="Input.GPA" class="text-danger"></span>
+            </div>
+            <div class="form-input">
                 <select class="form-select" style="display:block;" asp-for="Input.UniversityId">
                     <option disabled selected>University</option>
                     @foreach (var university in @Model.Universities)

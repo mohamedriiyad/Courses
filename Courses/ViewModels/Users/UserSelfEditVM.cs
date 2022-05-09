@@ -12,5 +12,9 @@ namespace Courses.ViewModels.Users
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
 
+        [Required]
+        [Display(Name = "GPA")]
+        public double? NewGPA { get; set; }
+
     }
 }

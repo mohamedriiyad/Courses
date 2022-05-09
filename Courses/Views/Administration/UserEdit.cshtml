@@ -13,8 +13,8 @@
         <div class="login-form">
             <!-- logo-login -->
             @*<div class="logo-login">
-                    <a href="index.html"><img src="~/assets/img/logo/loder.png" alt=""></a>
-                </div>*@
+            <a href="index.html"><img src="~/assets/img/logo/loder.png" alt=""></a>
+        </div>*@
             <h2>Edit your INFO</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-input">
@@ -30,6 +30,10 @@
                     }
                 </select>
                 <span asp-validation-for="@Model.UniversityId" class="text-danger"></span>
+            </div>
+            <div class="form-input">
+                <span asp-validation-for="@Model.NewGPA" class="text-danger"></span>
+                <input asp-for="@Model.NewGPA" placeholder="GPA">
             </div>
             <div class="form-input">
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>

@@ -11,6 +11,7 @@ namespace Courses.Models
             Enrollement = new HashSet<Enrollement>();
         }
 
+        public double? GPA { get; set; }
         public int? UniversityId { get; set; }
 
         public virtual University University { get; set; }
