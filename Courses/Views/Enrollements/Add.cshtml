@@ -56,48 +56,65 @@
                     </div>
                 </div>
             </div>
-
-            @if (ViewBag.Explore.Count > 2)
+            @if (string.IsNullOrEmpty(ViewBag.Recommendation))
             {
-                <div style="text-align: center;" class="row">
-                    @foreach (var course in ViewBag.Explore)
-                    {
-                        <div class="col-lg-4 col-md-6 col-sm-8">
-                            <div class="single-services mb-30">
-                                <div class="features-icon">
-                                    <img src="~/assets/img/icon/icon1.svg" alt="">
+                @if (ViewBag.Explore.Count > 2)
+                {
+                    <div style="text-align: center;" class="row">
+                        @foreach (var course in ViewBag.Explore)
+                        {
+
+                            @*<div class="col-lg-4 col-md-6 col-sm-8">
+                                <div class="single-services mb-30">
+                                    <div class="features-icon">
+                                        <img src="~/assets/img/icon/icon1.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <h3 style="margin-top: 13px;">@course.Name</h3>
+                                        <p style="margin-bottom: 6px;">Code: @course.Code</p>
+                                        <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                                    </div>
                                 </div>
-                                <div class="features-caption">
-                                    <h3 style="margin-top: 13px;">@course.Name</h3>
-                                    <p style="margin-bottom: 6px;">Code: @course.Code</p>
-                                    <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                            </div>*@
+                        }
+
+
+
+                    </div>
+                }
+                else
+                {
+                    <div style="text-align: right;" class="row">
+                        @foreach (var course in ViewBag.Explore)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-8">
+                                <div class="single-services mb-30">
+                                    <div class="features-icon">
+                                        <img src="~/assets/img/icon/icon1.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <h3 style="margin-top: 13px;">@course.Name</h3>
+                                        <p style="margin-bottom: 6px;">Code: @course.Code</p>
+                                        <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-
-
-
-                </div>
+                        }
+                    </div>
+                }
             }
             else
             {
                 <div style="text-align: right;" class="row">
-                    @foreach (var course in ViewBag.Explore)
-                    {
                         <div class="col-lg-4 col-md-6 col-sm-8">
                             <div class="single-services mb-30">
-                                <div class="features-icon">
-                                    <img src="~/assets/img/icon/icon1.svg" alt="">
-                                </div>
                                 <div class="features-caption">
-                                    <h3 style="margin-top: 13px;">@course.Name</h3>
-                                    <p style="margin-bottom: 6px;">Code: @course.Code</p>
-                                    <p style=" line-height: 7px;">Grade: @course.Grade</p>
+                                    <h3>@ViewBag.Recommendation</h3>
+                                    <p>go to home page </p>
+                                    <p>and explore our courses</p>
                                 </div>
                             </div>
                         </div>
-                    }
                 </div>
             }
         </div>

@@ -224,6 +224,7 @@ namespace Courses.Controllers
             userInDb.Email = input.Email;
             userInDb.PhoneNumber = input.PhoneNumber;
             userInDb.UniversityId = input.UniversityId;
+            userInDb.GPA = input.NewGPA;
             await _db.SaveChangesAsync();
             
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, input.OldPassword, input.NewPassword);
