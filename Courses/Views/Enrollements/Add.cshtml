@@ -26,26 +26,26 @@
                     </div>
                 </div>
             </div>
-            <form asp-action="Add">
+            <div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="input-group-icon border mt-10">
-                    <div class="icon"><i class="fa fa-book" aria-hidden="true"></i></div>
+                    @*<div class="icon"><i class="fa fa-book" aria-hidden="true"></i></div>*@
                     <div class="form-select" id="default-select">
-                        <select asp-for="CourseId" asp-items="ViewBag.Courses">
-                            <option selected disabled value="-1">Course</option>
+                        <select required id="dropDownList-example" class="form-control" style="height: calc(12.25rem + 9px); padding: 0.375rem 0.75rem; font-size: 1.5rem; line-height: 1.5; color: #020202; border: 4px solid #696eff; border-radius: 0.7rem;" multiple asp-items="ViewBag.Courses">
+                            <option disabled selected value="0">-- Please Select Your Courses --</option>
                         </select>
                     </div>
                 </div>
-                <div class="input-group-icon border mt-10">
-                    <div class="icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
-                    <input asp-for="Grade" type="number" placeholder="Grade"
-                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required
-                           class="single-input">
+                @*<div class="input-group-icon border mt-10">
+                        <div class="icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
+                        <input asp-for="Grade" type="number" placeholder="Grade"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Grade'" required
+                               class="single-input">
+                    </div>*@
+                <div class="mt-10 center" style="text-align: center; margin-top: 118px;">
+                    <button onclick="confirm()" href="#" class="genric-btn primary circle">Get Suggestion</button>
                 </div>
-                <div class="mt-10 center" style="text-align: center; margin-top: 24px;">
-                    <button type="submit" href="#" class="genric-btn primary circle">Get Suggestion</button>
-                </div>
-            </form>
+            </div>
         </div>
 
         <div class="left-content3" style="width: 56%;">
@@ -105,6 +105,82 @@
 </section>
 
 
+<a href="#" id="mod" hidden style="color:red;" data-placement="left" data-toggle="modal" data-target=".bd-example-modal-sm" title="Delete"><i class="pe-7s-trash"></i></a>
+<!--Modal-->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 77px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="message"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="modalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="modalBtn" type="button" class="btn btn-primary" onclick="ok()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        var confirm = function () {
+            var list = document.getElementById("dropDownList-example").selectedOptions;
+            var values = Array.from(list).map(({ value }) => parseInt(value));
+
+            if (values[0] != 0 || values.length > 1) {
+                var ids = [];
+                for (var i = 0; i < values.length; i++) {
+                    ids[i] = values[i]
+                }
+                console.log(ids)
+                $.ajax({
+                    type: "POST",
+                    url: "/Enrollements/Add",
+                    data: { ids },
+                    success: function (data) {
+                        if (data.result) {
+                            success(data.message);
+                            var list = document.getElementById("dropDownList-example").
+                        } else {
+                            failed(data.message);
+                        }
+                    },
+                    error: function (response) {
+                        failed("This Course with these PreCourses is Already exists!.");
+                    }
+                });
+            } else {
+                failed("You should select one Course.");
+            }
+        }
+
+        var ok = function () {
+            window.location.href = "/Courses/Create";
+        }
+
+        var stay = function () {
+            document.getElementById("modalClose").click();
+        }
+
+        var success = function (message) {
+            document.getElementById("exampleModalLongTitle").innerHTML = "Success!";
+            document.getElementById("message").innerHTML = message;
+            document.getElementById("mod").click();
+            document.getElementById("modalBtn").setAttribute('onclick', 'ok()')
+        }
+
+        var failed = function (message) {
+            document.getElementById("exampleModalLongTitle").innerHTML = "Failed";
+            document.getElementById("message").innerHTML = message;
+            document.getElementById("mod").click();
+            document.getElementById("modalBtn").setAttribute('onclick', 'stay()')
+        }
+    </script>
+
 }

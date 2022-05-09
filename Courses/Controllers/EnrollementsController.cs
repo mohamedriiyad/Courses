@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Courses.Data;
 using Courses.Models;
+using Courses.ViewModels.Courses;
+using Microsoft.AspNetCore.Identity;
 
 namespace Courses.Controllers
 {
     public class EnrollementsController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public EnrollementsController(ApplicationDbContext context)
+        public EnrollementsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Enrollements
@@ -64,37 +68,46 @@ namespace Courses.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(Enrollement input)
+        public async Task<JsonResult> Add(List<int> ids)
         {
-            var course = await _context.Courses.FindAsync(input.CourseId);
-            if(input.Grade < (course.Grade/2))
+            List<Course> courses = new List<Course>();
+            foreach(var courseId in ids)
             {
-                ViewData["Explore"] = _context.Courses.Take(6).ToList();
-                ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
-                ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
-                ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
-                ViewData["Title"] = "Explore top subjects";
-
-                ModelState.AddModelError("", "SORRY, You did not pass the course! ");
-                return View(input);
+                courses.Add(await _context.Courses.FindAsync(courseId));
             }
-            await _context.Enrollements.AddAsync(input);
-            await _context.SaveChangesAsync();
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var passedCourses = courses.Where(c => c.Grade < user.GPA).ToList();
+            var failedCourses = courses.Where(c => c.Grade > user.GPA).ToList();
 
-            ViewData["Explore"] = _context.PrerequisitesCourse.Where(p => p.PreCourseId == input.CourseId).Select(p => new Course {
-                Name = p.Course.Name,  
-                Code = p.Course.Code,
-                Credit = p.Course.Credit,   
-                Grade = p.Course.Grade,
-                Id = p.Course.Id,
-            }).ToList();
+            ViewData["Explore"] = passedCourses;
+            //if (courses.Grade < (course.Grade / 2))
+            //{
+            //    ViewData["Explore"] = _context.Courses.Take(6).ToList();
+            //    ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
+            //    ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+            //    ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            //    ViewData["Title"] = "Explore top subjects";
+
+            //    ModelState.AddModelError("", "SORRY, You did not pass the course! ");
+            //    return View(input);
+            //}
+            //await _context.Enrollements.AddAsync(input);
+            //await _context.SaveChangesAsync();
+
+            //ViewData["Explore"] = _context.PrerequisitesCourse.Where(p => p.PreCourseId == input.CourseId).Select(p => new Course
+            //{
+            //    Name = p.Course.Name,
+            //    Code = p.Course.Code,
+            //    Credit = p.Course.Credit,
+            //    Grade = p.Course.Grade,
+            //    Id = p.Course.Id,
+            //}).ToList();
             ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
             ViewData["Title"] = "Your Suggestions";
 
-            return View(input);
+            return Json(passedCourses);
         }
         // POST: Enrollements/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

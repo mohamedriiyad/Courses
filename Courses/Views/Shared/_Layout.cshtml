@@ -33,7 +33,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.png" alt="">
+                    <img src="~/assets/img/logo/loder.png" alt="">
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                                                 {
                                                     <li class="button-header margin-left "><a asp-area="Identity" asp-page="/Account/Logout" class="btn">Logout</a></li>
                                                     <li class="button-header"><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name })" class="btn btn3">Edit Info</a></li>
- }
+                                                }
                                                 else
                                                 {
                                                     <li class="button-header margin-left "><a asp-area="Identity" asp-page="/Account/Login" class="btn">Log in</a></li>
@@ -140,9 +140,9 @@
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
                                         @*<li><a href="#">Telecommunication</a></li>
-                                        <li><a href="#">Restaurant</a></li>
-                                        <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>*@
+                                            <li><a href="#">Restaurant</a></li>
+                                            <li><a href="#">Programing</a></li>
+                                            <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -154,9 +154,9 @@
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
                                         @*<li><a href="#">Telecommunication</a></li>
-                                        <li><a href="#">Restaurant</a></li>
-                                        <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>*@
+                                            <li><a href="#">Restaurant</a></li>
+                                            <li><a href="#">Programing</a></li>
+                                            <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -168,9 +168,9 @@
                                     <ul>
                                         <li><a href="#">Design & creatives</a></li>
                                         @*<li><a href="#">Telecommunication</a></li>
-                                        <li><a href="#">Restaurant</a></li>
-                                        <li><a href="#">Programing</a></li>
-                                        <li><a href="#">Architecture</a></li>*@
+                                            <li><a href="#">Restaurant</a></li>
+                                            <li><a href="#">Programing</a></li>
+                                            <li><a href="#">Architecture</a></li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
     <!-- Date Picker -->
     <script src="~/assets/js/gijgo.min.js"></script>
     <!-- Nice-select, sticky -->
-    <script src="~/assets/js/jquery.nice-select.min.js"></script>
+    @*<script src="~/assets/js/jquery.nice-select.min.js"></script>*@
     <script src="~/assets/js/jquery.sticky.js"></script>
     <!-- Progress -->
     <script src="~/assets/js/jquery.barfiller.js"></script>
@@ -246,6 +246,8 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="~/assets/js/plugins.js"></script>
     <script src="~/assets/js/main.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/main.js"></script>
+    <script src="~/assets/scripts/jquery-1.10.2.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
