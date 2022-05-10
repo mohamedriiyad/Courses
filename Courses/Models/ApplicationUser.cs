@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Courses.Models
 {
@@ -11,6 +12,7 @@ namespace Courses.Models
             Enrollement = new HashSet<Enrollement>();
         }
 
+        [Range(0,4.0,ErrorMessage ="GPA Must be between 0 and 4.")]
         public double? GPA { get; set; }
         public int? UniversityId { get; set; }
 

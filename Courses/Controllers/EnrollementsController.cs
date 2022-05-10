@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Courses.Data;
 using Courses.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace Courses.Controllers
 {
     public class EnrollementsController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -67,46 +67,36 @@ namespace Courses.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(Enrollement input)
+        public async Task<JsonResult> Add(List<int> ids)
         {
-            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (currentUser.GPA > 2.6)
+            var course = await _context.Courses.FindAsync(input.CourseId);
+            if(input.Grade < (course.Grade/2))
             {
-
-                var course = await _context.Courses.FindAsync(input.CourseId);
-                if (input.Grade < (course.Grade / 2))
-                {
-                    ViewData["Explore"] = _context.Courses.Take(6).ToList();
-                    ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
-                    ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
-                    ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
-                    ViewData["Title"] = "Explore top subjects";
-
-                    ModelState.AddModelError("", "SORRY, You did not pass the course! ");
-                    return View(input);
-                }
-                await _context.Enrollements.AddAsync(input);
-                await _context.SaveChangesAsync();
-
-                ViewData["Explore"] = _context.PrerequisitesCourse.Where(p => p.PreCourseId == input.CourseId).Select(p => new Course
-                {
-                    Name = p.Course.Name,
-                    Code = p.Course.Code,
-                    Credit = p.Course.Credit,
-                    Grade = p.Course.Grade,
-                    Id = p.Course.Id,
-                }).ToList();
+                ViewData["Explore"] = _context.Courses.Take(6).ToList();
                 ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
                 ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
                 ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
-                ViewData["Title"] = "Your Suggestions";
+                ViewData["Title"] = "Explore top subjects";
 
+                ModelState.AddModelError("", "SORRY, You did not pass the course! ");
                 return View(input);
             }
-            else
-                ViewData["Recommendation"] = "Your GPA is low than 2.6 you connot enroll in these courses";
-            return View();
+            await _context.Enrollements.AddAsync(input);
+            await _context.SaveChangesAsync();
+
+            ViewData["Explore"] = _context.PrerequisitesCourse.Where(p => p.PreCourseId == input.CourseId).Select(p => new Course {
+                Name = p.Course.Name,  
+                Code = p.Course.Code,
+                Credit = p.Course.Credit,   
+                Grade = p.Course.Grade,
+                Id = p.Course.Id,
+            }).ToList();
+            ViewData["Courses"] = new SelectList(_context.Courses.ToList(), "Id", "Name");
+            ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Grade");
+            ViewData["Title"] = "Your Suggestions";
+
+            return View(input);
         }
         // POST: Enrollements/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

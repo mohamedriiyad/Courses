@@ -20,6 +20,7 @@ namespace Courses.Models
         public string Code { get; set; }
 
         [Required]
+        [Range(0, 100.0, ErrorMessage = "Grade Must be between 0 and 100.")]
         public float Grade { get; set; }
 
         [Required]

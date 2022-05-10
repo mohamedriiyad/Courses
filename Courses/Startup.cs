@@ -35,11 +35,11 @@ namespace Courses
 
             services.AddDefaultIdentity<ApplicationUser>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireDigit = false;
+                options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = false;
+                options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
+                options.Password.RequireUppercase = true;
                 options.Password.RequiredUniqueChars = 0;
             }).AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
