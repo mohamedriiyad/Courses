@@ -12,9 +12,9 @@ namespace Courses.ViewModels.Users
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [Display(Name = "GPA")]
-        [Range(0, 4.0, ErrorMessage = "Grade Must be between 0 and 4.")]
+        //[Required]
+        //[Display(Name = "GPA")]
+        //[Range(0, 4.0, ErrorMessage = "Grade Must be between 0 and 4.")]
         public double? NewGPA { get; set; }
 
     }

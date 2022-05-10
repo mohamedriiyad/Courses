@@ -1,0 +1,33 @@
+﻿@model Courses.ViewModels.Users.UserSelfEditVM
+
+@{
+    Layout = "~/views/shared/_LoginLayout.cshtml";
+}
+
+
+
+<main class="login-body">
+    <!-- Login Admin -->
+    <form id="account" method="post">
+
+        <div class="login-form">
+            <!-- logo-login -->
+            @*<div class="logo-login">
+                    <a href="index.html"><img src="~/assets/img/logo/loder.png" alt=""></a>
+                </div>*@
+            <h2>Update Your GPA</h2>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <div class="form-input">
+                    <span asp-validation-for="@Model.NewGPA" class="text-danger"></span>
+                    <input asp-for="@Model.NewGPA" placeholder="GPA">
+                </div>
+            
+            <div class="form-input pt-30">
+                <input type="submit" value="Reset">
+            </div>
+        </div>
+    </form>
+    <!-- /end login form -->
+</main>
+

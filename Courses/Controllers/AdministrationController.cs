@@ -233,7 +233,7 @@ namespace Courses.Controllers
             userInDb.Email = input.Email;
             userInDb.PhoneNumber = input.PhoneNumber;
             userInDb.UniversityId = input.UniversityId;
-            userInDb.GPA = input.NewGPA;
+            //userInDb.GPA = input.NewGPA;
             await _db.SaveChangesAsync();
             
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, input.OldPassword, input.NewPassword);
@@ -251,6 +251,44 @@ namespace Courses.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize]
+        public async Task<ActionResult> UserGPAEdit(string name)
+        {
+            var userInDb = await _userManager.FindByNameAsync(name);
+            if (userInDb == null)
+                return BadRequest("There is no such USER!");
+            var universities = _db.Universities.ToList();
+            var user = new UserSelfEditVM
+            {
+                Id = userInDb.Id,
+                Email = userInDb.Email,
+                PhoneNumber = userInDb.PhoneNumber,
+                NewGPA = userInDb.GPA,
+                Universities = universities
+            };
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UserGPAEdit(UserGPAEdit input)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with Username '{_userManager.GetUserName(User)}'.");
+            }
+            var userInDb = await _db.Users.FindAsync(user.Id);
+            userInDb.GPA = input.NewGPA;
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
         private async Task<ApplicationUser> FindByIdAsync(string id)
         {
             return await _userManager.FindByIdAsync(id);

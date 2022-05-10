@@ -65,6 +65,7 @@
                                                     <a href="#">User</a>
                                                     <ul class="submenu">
                                                         <li><a href="@Url.Action("UserEdit", "Administration", new { name = User.Identity.Name})">Edit Info</a></li>
+                                                        <li><a href="@Url.Action("UserGPAEdit", "Administration", new { name = User.Identity.Name})">Update Your GPA</a></li>
                                                         <li><a href="Identity/Account/Logout">Logout</a></li>
 
                                                         @*<li><a href="elements.html">Element</a></li>*@
