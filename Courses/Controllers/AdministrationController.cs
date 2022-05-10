@@ -209,6 +209,15 @@ namespace Courses.Controllers
         [Authorize]
         public async Task<IActionResult> UserEdit(UserSelfEditVM input)
         {
+
+            var university = await _db.Universities.FindAsync(input.UniversityId);
+            if (university == null)
+            {
+                ModelState.AddModelError(string.Empty, "University Field is required.");
+                input.Universities = _db.Universities.ToList();
+                return View(input);
+            }
+            
             if (!ModelState.IsValid)
             {
                 input.Universities = _db.Universities.ToList();
