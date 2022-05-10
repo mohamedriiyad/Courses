@@ -78,6 +78,7 @@ namespace Courses.Areas.Identity.Pages.Account
             public int UniversityId { get; set; }
 
             [Required]
+            [Range(0, 4.0, ErrorMessage = "Grade Must be between 0 and 4.")]
             public double GPA { get; set; }
 
             [Required]
